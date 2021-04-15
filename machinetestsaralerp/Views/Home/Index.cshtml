@@ -1,0 +1,238 @@
+﻿@model IEnumerable<machinetestsaralerp.Models.user>
+@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+    ul.menu {
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        margin: 20px auto;
+        font-family: "Century Gothic";
+        box-shadow: 0px 0px 25px #00000070;
+        clear: both;
+        display: table;
+        margin-bottom: 100px;
+    }
+
+        ul.menu .list {
+            font-size: 14px;
+            border-bottom: 1px solid #324252;
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            height: 50px;
+            vertical-align: sub;
+            background: #3e5165;
+            clear: both;
+        }
+
+            ul.menu .list:after {
+                font-family: FontAwesome;
+                position: absolute;
+                right: 17px;
+                top: 17px;
+                padding: 0px 5px;
+                color: #fff;
+            }
+
+            ul.menu .list:before {
+                font-family: FontAwesome;
+                position: absolute;
+                left: 17px;
+                top: 17px;
+                padding: 0px 5px;
+                color: #fff;
+            }
+
+            ul.menu .list a {
+                text-decoration: none;
+                color: #fff;
+                padding: 13px 0px 17px 45px;
+                display: block;
+                height: 100%;
+                box-sizing: border-box;
+            }
+
+                ul.menu .list a:hover {
+                    background-color: #324252;
+                    transition: 300ms all;
+                    color: #09fbd2;
+                    margin-bottom: 2px;
+                }
+
+            ul.menu .list .items {
+                height: 0px;
+                overflow: hidden;
+            }
+
+                ul.menu .list .items a {
+                    padding: 17px;
+                }
+
+                    ul.menu .list .items a:hover {
+                        background-color: #3f5d79;
+                        color: #fff;
+                        transition: 300ms all;
+                    }
+
+            ul.menu .list:last-child {
+                border-bottom: none;
+            }
+
+        ul.menu .active:after {
+            font-family: FontAwesome;
+            position: absolute;
+            right: 17px;
+            top: 17px;
+            padding: 0px 5px;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        ul.menu .active:before {
+            font-family: FontAwesome;
+            position: absolute;
+            left: 17px;
+            top: 17px;
+            padding: 0px 5px;
+            color: #fff;
+        }
+
+        ul.menu .active > .items {
+            display: block;
+            background: #23313f;
+            padding: 0px;
+            height: auto;
+            color: #fff;
+            transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+            transition: all 200ms;
+            clear: both;
+            float: left;
+            width: 100%;
+        }
+
+            
+            ul.menu .active > .items li {
+                padding: 0px;
+                border-bottom: 1px solid #324252;
+                list-style: none;
+            }
+
+                ul.menu .active > .items li:last-child {
+                    border-color: transparent;
+                    padding-bottom: 0px;
+                }
+
+            ul.menu .active > .items .active > .items {
+                background-color: #2f4b67;
+            }
+
+        ul.menu .active > a {
+            color: #46efa4;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        ul.menu .active .list {
+            background: #697d92;
+        }
+
+            ul.menu .active .list a {
+                padding: 13px 0px 17px 45px;
+            }
+
+ ul.menu .active > .items li:after {
+        position: absolute;
+        content: "";
+        top: 5px;
+        left: -20px;
+        border-left: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+        width: 20px;
+        height: 100%;
+    }
+
+    ul.menu .active > .items li:before {
+        position: absolute;
+        content: "";
+        top: 5px;
+        left: -20px;
+        border-left: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        width: 20px;
+        height: 100%;
+    }
+</style>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<div class="row">
+    <div class="col-md-12 nav1">
+        <ul class="menu list-unstyled">
+
+            @foreach (var item in Model)
+            {
+                <li class="list">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="#">@item.name </a>
+                        </div>
+                        <div class="col-md-4">@item.sales.Count</div>
+                        <div class="col-md-4">
+                            <span class="bg-primary"><i class="glyphicon glyphicon-edit"></i></span>
+                            <span class="bg-primary"><i class="glyphicon glyphicon-trash"></i></span>
+                            <span class="bg-primary"><i class="glyphicon glyphicon-plus-sign"></i></span>
+                        </div>
+                    </div>
+                    @if (item.sales.Count > 0)
+                    {
+                        <ul class="items">
+                            @foreach (var sale in item.sales)
+                            {
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <a href="#">@sale.name </a>
+                                        </div>
+                                        <div class="col-md-3">@sale.details</div>
+                                        <div class="col-md-3">@Html.Raw(sale.DateOn.HasValue?sale.DateOn.Value.ToString ("MMMM dd yyyy") :"Na")</div>
+                                        <div class="col-md-3">
+                                            <span class="bg-primary"><i class="glyphicon glyphicon-edit"></i></span>
+                                            <span class="bg-primary"><i class="glyphicon glyphicon-trash"></i></span>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        const list = document.querySelectorAll('.list');
+
+        function accordion(e) {
+            e.stopPropagation();
+            if (this.classList.contains('active')) {
+                this.classList.remove('active');
+            }
+            else if (this.parentElement.parentElement.classList.contains('active')) {
+                this.classList.add('active');
+            }
+            else {
+                for (i = 0; i < list.length; i++) {
+                    list[i].classList.remove('active');
+                }
+                this.classList.add('active');
+            }
+        }
+        for (i = 0; i < list.length; i++) {
+            list[i].addEventListener('click', accordion);
+        }
+
+    });
+</script>
